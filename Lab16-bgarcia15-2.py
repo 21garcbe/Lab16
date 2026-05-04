@@ -16,26 +16,39 @@ path = Path('world_fires_1_day.csv')
 
 lats = []
 lons = []
+brightnesses = []
+dates = []
 
 #read csv
 with path.open() as file:
     reader = csv.reader(file)
-    row = next(reader)
+    header_row = next(reader)
     
     for index, row in enumerate(reader):
         if index >= 1000:
             break
 
-        lat = float(row[0])
-        lon = float(row[1])
+        try:
 
-        lats.append(lat)
-        lons.append(lon)
+            lat = float(row[0])
+            lon = float(row[1])
+            brightness = float(row[2])
+            date = row[5]
+        except ValueError:
+            print(f"Skipped invalid data on row {index+1}")
+        
+        else:
+
+            lats.append(lat)
+            lons.append(lon)
+            brightnesses.append(brightness)
+            dates.append(date)
 
         
 #set title and figure to a basic worldmap
 title = "Global Fires"
-fig = ex.scatter_geo(lat = lats, lon= lons, title = title)
+fig = ex.scatter_geo(lat = lats, lon= lons, color = brightnesses, title = title, hover_name= dates, labels= {"color": "brightness"})
 fig.show()
+fig.write_html("Global_Fires.html")
 
 
