@@ -44,12 +44,12 @@ with path.open() as file:
             lons.append(lon)
             brightnesses.append(brightness)
             dates.append(date)
-            hover_texts.append(f"({lat}, {lon})")
+            hover_texts.append(f"Coordinates: ({lat}, {lon})<br>Date: {date}")
 
         
 #set title and figure to a basic worldmap
 title = "Global Fires"
-fig = ex.scatter_geo(lat = lats, lon= lons, color = brightnesses, title = title, hover_name= hover_texts, labels= {"color": "Brightness"})
+fig = ex.scatter_geo(lat= lats, lon = lons, color = brightnesses, title = title, hover_name= hover_texts, labels= {"color": "Brightness"})
 fig.show()
 fig.write_html("Global_Fires.html")
 
