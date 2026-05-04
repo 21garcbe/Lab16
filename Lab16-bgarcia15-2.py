@@ -11,11 +11,8 @@ import plotly.express as ex
 import csv
 from pathlib import Path 
 
-
-"""Plots gobal fire data from csv format using plotly"""
 #set path to csv of fire data
 path = Path('world_fires_1_day.csv')
-
 
 lats = []
 lons = []
@@ -25,7 +22,10 @@ with path.open() as file:
     reader = csv.reader(file)
     row = next(reader)
     
-    for row in reader:
+    for index, row in enumerate(reader):
+        if index >= 1000:
+            break
+
         lat = float(row[0])
         lon = float(row[1])
 
